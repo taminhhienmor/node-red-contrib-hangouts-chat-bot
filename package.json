@@ -1,0 +1,33 @@
+{
+  "name": "node-red-contrib-hangouts-chat-sensor",
+  "version": "0.0.1",
+  "author": "minh hien <taminhhien.mor.vn@gmail.com>",
+  "description": "The simplest of simple nodes with hangouts-chat",
+  "dependencies": {
+    "googleapis": "^48.0.0",
+    "request": "^2.88.2"
+  },
+  "keywords": [
+    "node-red",
+    "hangout",
+    "hangouts",
+    "hangouts-chat",
+    "hangouts-chat-sensor"
+  ],
+  "node-red": {
+    "nodes": {
+      "hangouts-sensor": "source/hangouts-sensor.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/taminhhienmor/node-red-contrib-hangouts-chat-sensor"
+  },
+  "maintainers": [
+    {
+      "name": "minh hien",
+      "email": "taminhhien.mor.vn@gmail.com"
+    }
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,64 @@
+<script type="text/x-red" data-template-name="hangoutSensor">
+    <div class="form-row">
+        <label for="node-input-keyproperty"><i class="fa fa-key"></i> Key</label>
+        <input type="text" id="node-input-keyproperty">
+    </div>
+    <div class="form-row">
+        <label for="node-input-roomproperty"><i class="fa fa-group"></i> Room</label>
+        <input type="text" id="node-input-roomproperty">
+    </div>
+    <div class="form-row">
+        <label for="node-input-contentproperty"><i class="fa fa-comment"></i> Content</label>
+        <input type="text" id="node-input-contentproperty">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="hangoutSensor">
+    <!-- <p>Color Circle</p>
+    <p>Input Parameters:
+        <ul>
+            <li><b>Value</b> - The range value is 0 ~ 1.0 <b>Value</b> property or the <code>msg.[name]</code> property</li>
+            <li><b>gain</b> - The value of gain. The default value of gain is 10. The gain is taken from the <code>msg.gain</code> property</li>
+            <li><b>offset_x</b> - The value of offset_x. The default value of offset_x is 0.2. The gain is taken from the <code>msg.offset_x</code> property</li>
+            <li><b>offset_green</b> - The value of offset_green. The default value of offset_x is 0.6. The gain is taken from the <code>msg.offset_green</code> property</li>
+        </ul>
+    </p>
+    <p>Return values:
+        <ul>
+            <li><b>payload</b> Will either be details for color or provide an error state</li>
+        </ul>
+    </p> -->
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('hangoutSensor',{
+        category: 'Hangouts Chat',
+        color:"#C0DEED",
+        defaults: {
+            keyproperty: { value: "key", validate: RED.validators.typedInput("keytype"), require:true },
+            keytype: { value: "msg" },
+            roomproperty: { value: "room", validate: RED.validators.typedInput("roomtype"), require:true },
+            roomtype: { value: "msg" },
+            contentproperty: { value: "content", validate: RED.validators.typedInput("contenttype"), require:true },
+            contenttype: { value: "msg" }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "hangout-chat-icon.png",
+        align: "left",
+        label: 'Hangouts',
+        paletteLabel: 'Hangouts',
+        oneditprepare: function () {
+            $("#node-input-keyproperty").typedInput({ default: this.keytype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
+            $("#node-input-roomproperty").typedInput({ default: this.roomtype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
+            $("#node-input-contentproperty").typedInput({ default: this.contenttype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
+        },
+        oneditsave: function () {
+            this.keytype = $("#node-input-keyproperty").typedInput('type');
+            this.roomtype = $("#node-input-roomproperty").typedInput('type');
+            this.contenttype = $("#node-input-contentproperty").typedInput('type');
+        }
+    });
+</script>
+
