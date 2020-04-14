@@ -1,7 +1,7 @@
 <script type="text/x-red" data-template-name="hangoutSensor">
     <div class="form-row">
-        <label for="node-input-keyproperty"><i class="fa fa-key"></i> Key</label>
-        <input type="text" id="node-input-keyproperty">
+        <label for="node-input-hangoutsCertificate"><i class="fa fa-certificate"></i> Hangouts</label>
+        <input type="text" id="node-input-hangoutsCertificate">
     </div>
     <div class="form-row">
         <label for="node-input-roomproperty"><i class="fa fa-group"></i> Room</label>
@@ -14,20 +14,19 @@
 </script>
 
 <script type="text/x-red" data-help-name="hangoutSensor">
-    <!-- <p>Color Circle</p>
+    <p>Hangouts-chat-sensor</p>
     <p>Input Parameters:
         <ul>
-            <li><b>Value</b> - The range value is 0 ~ 1.0 <b>Value</b> property or the <code>msg.[name]</code> property</li>
-            <li><b>gain</b> - The value of gain. The default value of gain is 10. The gain is taken from the <code>msg.gain</code> property</li>
-            <li><b>offset_x</b> - The value of offset_x. The default value of offset_x is 0.2. The gain is taken from the <code>msg.offset_x</code> property</li>
-            <li><b>offset_green</b> - The value of offset_green. The default value of offset_x is 0.6. The gain is taken from the <code>msg.offset_green</code> property</li>
+            <li><b>Key</b> - The key in hangouts-chat <b>Key</b> property or the <code>msg.[key]</code> property</li>
+            <li><b>Room</b> - The room in hangouts-chat <b>Key</b> property or the <code>msg.[room]</code> property</li>
+            <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Key</b> property or the <code>msg.[content]</code> property</li>
         </ul>
     </p>
     <p>Return values:
         <ul>
-            <li><b>payload</b> Will either be details for color or provide an error state</li>
+            <li><b>payload</b> Will content sent or provide an error state</li>
         </ul>
-    </p> -->
+    </p>
 </script>
 
 
@@ -36,8 +35,7 @@
         category: 'Hangouts Chat',
         color:"#C0DEED",
         defaults: {
-            keyproperty: { value: "key", validate: RED.validators.typedInput("keytype"), require:true },
-            keytype: { value: "msg" },
+            hangoutsCertificate: {type: "hangoutsCertificate", require:true},
             roomproperty: { value: "room", validate: RED.validators.typedInput("roomtype"), require:true },
             roomtype: { value: "msg" },
             contentproperty: { value: "content", validate: RED.validators.typedInput("contenttype"), require:true },
@@ -50,12 +48,10 @@
         label: 'Hangouts',
         paletteLabel: 'Hangouts',
         oneditprepare: function () {
-            $("#node-input-keyproperty").typedInput({ default: this.keytype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
             $("#node-input-roomproperty").typedInput({ default: this.roomtype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
             $("#node-input-contentproperty").typedInput({ default: this.contenttype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
         },
         oneditsave: function () {
-            this.keytype = $("#node-input-keyproperty").typedInput('type');
             this.roomtype = $("#node-input-roomproperty").typedInput('type');
             this.contenttype = $("#node-input-contentproperty").typedInput('type');
         }

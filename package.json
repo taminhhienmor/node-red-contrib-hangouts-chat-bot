@@ -16,7 +16,8 @@
   ],
   "node-red": {
     "nodes": {
-      "hangouts-sensor": "source/hangouts-sensor.js"
+      "hangouts-sensor": "source/hangouts-sensor.js",
+      "hangouts-certificate": "source/hangoutsCertificate.js"
     }
   },
   "repository": {

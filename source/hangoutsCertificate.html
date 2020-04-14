@@ -1,0 +1,42 @@
+<script type="text/x-red" data-template-name="hangoutsCertificate">
+    <div class="form-row">
+        <label for="node-config-input-clientEmail"><i class="fa fa-envelope"></i> Client Email</label>
+        <input type="text" id="node-config-input-clientEmail">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-privateKey"><i class="fa fa-key"></i> Private Key</label>
+        <input type="password" id="node-config-input-privateKey">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="hangoutsCertificate">
+    <p>Hangouts-chat-sensor</p>
+    <p>Input Parameters:
+        <ul>
+            <li><b>Key</b> - The key in hangouts-chat <b>Key</b> property or the <code>msg.[key]</code> property</li>
+            <li><b>Room</b> - The room in hangouts-chat <b>Key</b> property or the <code>msg.[room]</code> property</li>
+            <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Key</b> property or the <code>msg.[content]</code> property</li>
+        </ul>
+    </p>
+    <p>Return values:
+        <ul>
+            <li><b>payload</b> Will content sent or provide an error state</li>
+        </ul>
+    </p>
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('hangoutsCertificate',{
+        category: 'config',
+        color:"#C0DEED",
+        defaults: {
+            clientEmail: { value: "", type: "password"},
+            privateKey: { value: "", type: "password"},
+        },
+        label: function() {
+            return this.clientEmail || 'Hangouts Certificate'
+        }
+    });
+</script>
+

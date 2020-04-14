@@ -5,54 +5,62 @@ module.exports = function (RED) {
 
 	function hangoutSensor(n) {
 		RED.nodes.createNode(this, n);
-		this.box = RED.nodes.getNode(n.box);
 		var node = this;
-
-		var keytype = n.keytype || "msg";
-		var keyproperty = n.keyproperty;
 		
 		var roomtype = n.roomtype || "msg";
 		var roomproperty = n.roomproperty;
 		
 		var contenttype = n.contenttype || "msg";
 		var contentproperty = n.contentproperty;
+
+		var certificate = RED.nodes.getNode(n.hangoutsCertificate);
 		
 		node.on("input", function (msg) {
 			node.status({});
 
-			if(keyproperty == "") {
-				node.error(RED._("Value can't empty"),msg)
-				node.status({fill:"red",shape:"ring",text:"Error. Empty value"});        
-				return;
-			}
-
-			
-			var key = getValueProperty(keytype, keyproperty, this, msg)
 			var room = getValueProperty(roomtype, roomproperty, this, msg)
 			var content = getValueProperty(contenttype, contentproperty, this, msg)
 
-			getJWT(key).then((token) => {
-				var linkUrl = "https://chat.googleapis.com/v1/spaces/" + room + "/messages/"
-				var opts = {
-					method: "POST",
-					url: linkUrl,
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": "Bearer " + token
-					},
-					body: JSON.stringify({"text": content})
-				};
-				request(opts, function (error, response, body) {
-					if (error) {
-						node.error(error,{});
-						node.status({fill:"red",shape:"ring",text:"failed"});
-						return;
-					} else {
-						msg.payload = content
-						node.send(msg);
-					}            
-				})
-			})
+			var scopes = ['https://www.googleapis.com/auth/chat.bot'];
+			var decoder = certificate.privateKey.replace(/\\n/g,"\n")
+			var jwtClient = new google.auth.JWT(certificate.clientEmail, null, decoder, scopes);
+			jwtClient.authorize(function(error, tokens) {
+				if (error) {
+					node.error(error, {});
+					node.status({fill: "red", shape: "ring", text: "Error making request to generate access token"});
+					return;
+				} else if (tokens.access_token === null) {
+					node.error(error, {});
+					node.status({fill: "red", shape: "ring", text: "Provided service account does not have permission to generate access tokens"});
+					return;
+				} else {
+					var linkUrl = "https://chat.googleapis.com/v1/spaces/" + room + "/messages/"
+					var opts = {
+						method: "POST",
+						url: linkUrl,
+						headers: {
+							"Content-Type": "application/json",
+							"Authorization": "Bearer " + tokens.access_token
+						},
+						body: JSON.stringify({"text": content})
+					};
+					request(opts, function (error, response, body) {
+						var bodyObj = JSON.parse(body);
+						if (error) {
+							node.error(error,{});
+							node.status({fill:"red",shape:"ring",text:"failed request chat"});
+							return;
+						} else if (bodyObj.hasOwnProperty("error")) {
+							node.error(bodyObj.error);
+							node.status({fill:"red",shape:"ring",text:bodyObj.error.status});
+							return;
+						} else {
+							msg.payload = content
+							node.send(msg);
+						}            
+					})
+				}
+			});
 		})   
   	}
 
@@ -78,26 +86,6 @@ module.exports = function (RED) {
 				break;
 		}
 		return value
-	}
-
-	function getJWT(gkeys) {
-		return new Promise((resolve, reject) => {
-			let jwtClient = new google.auth.JWT(
-				gkeys.client_email,
-				null,
-				gkeys.private_key, ['https://www.googleapis.com/auth/chat.bot']);
-	
-			jwtClient.authorize((err, tokens) => {
-				if (err) {
-					console.log('Error create JWT hangoutchat');
-					node.error(error,{});
-					node.status({fill:"red",shape:"ring",text:"failed"});
-					return;
-				} else {
-					resolve(tokens.access_token);
-				}
-			});
-		});
 	}
 
 	RED.nodes.registerType("hangoutSensor", hangoutSensor);
