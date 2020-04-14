@@ -4,7 +4,6 @@ Hangouts-chat-sensor
 ## Usage
 <p>Input Parameters:
     <ul>
-        <li><b>Key</b> - The key in hangouts-chat <b>Key</b> property or the <code>msg.[key]</code> property</li>
         <li><b>Room</b> - The room in hangouts-chat <b>Key</b> property or the <code>msg.[room]</code> property</li>
         <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Key</b> property or the <code>msg.[content]</code> property</li>
     </ul>
