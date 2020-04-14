@@ -90,7 +90,9 @@ module.exports = function (RED) {
 			jwtClient.authorize((err, tokens) => {
 				if (err) {
 					console.log('Error create JWT hangoutchat');
-					reject(err);
+					node.error(error,{});
+					node.status({fill:"red",shape:"ring",text:"failed"});
+					return;
 				} else {
 					resolve(tokens.access_token);
 				}
