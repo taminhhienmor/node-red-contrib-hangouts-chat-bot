@@ -14,8 +14,8 @@ Hangouts-chat-sensor
         <li><b>payload</b> Will content sent or provide an error state</li>
     </ul>
 </p>
-![hangout-node](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-sensor/source/image/hangouts-node.png)
-![hangout-bot](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-sensor/source/image/hangouts-bot.png)
+![hangout-node](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-sensor/source/image/hangout-node.png)
+![hangout-bot](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-sensor/source/image/hangout-bot.png)
 ``` node
 [{"id":"885a65c2.ee0ff8","type":"inject","z":"947fa281.a6e48","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":180,"y":220,"wires":[["224bab51.cedcd4"]]},{"id":"f7259a32.043568","type":"debug","z":"947fa281.a6e48","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":730,"y":220,"wires":[]},{"id":"224bab51.cedcd4","type":"hangoutSensor","z":"947fa281.a6e48","hangoutsCertificate":"54da3398.354dfc","roomproperty":"AAAALmeclyU","roomtype":"str","contentproperty":"This is my test","contenttype":"str","x":460,"y":220,"wires":[["f7259a32.043568"]]},{"id":"54da3398.354dfc","type":"hangoutsCertificate","z":"","clientEmail":"","privateKey":""}]
 ```
