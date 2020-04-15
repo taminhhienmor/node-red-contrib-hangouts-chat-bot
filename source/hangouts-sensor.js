@@ -11,6 +11,7 @@ module.exports = function (RED) {
 		var contentproperty = n.contentproperty;
 
 		var certificate = RED.nodes.getNode(n.hangoutsCertificate);
+		if(certificate == null) return;
 
 		var room = n.roomname
 
@@ -90,6 +91,7 @@ module.exports = function (RED) {
 	RED.httpAdmin.get('/hangout', function(req, res) {     
 		var hangoutId = res.socket.parser.incoming._parsedUrl.path.split("id=")[1];
 		var certificate = RED.nodes.getNode(hangoutId);
+		if(certificate == null) return
 		        
         var scopes = ['https://www.googleapis.com/auth/chat.bot'];
 		var decoder = certificate.privateKey.replace(/\\n/g,"\n")

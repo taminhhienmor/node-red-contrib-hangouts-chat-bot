@@ -23,7 +23,7 @@ Hangouts-chat-sensor
 ```
 
 ## Guideline
-<a href="https://github.com/taminhhienmor/node-red-contrib-hangouts-chat-sensor/tree/master/source/docs/hangouts-chat-guideline-v0.0.3.docx">Guideline to use node and get keys</a>
+<a href="https://github.com/taminhhienmor/node-red-contrib-hangouts-chat-sensor/tree/master/source/docs/hangouts-chat-guideline-v0.0.5.docx">Guideline to use node and get keys</a>
 
 ## Reference
 <a href="https://flows.nodered.org/node/node-red-contrib-hangouts-chat">node-red-contrib-hangouts-chat</a>
