@@ -1,5 +1,3 @@
-const {google} = require('googleapis');
-
 module.exports = function(RED) {
     "use strict";
     function hangoutsCertificate(n) {

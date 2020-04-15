@@ -4,12 +4,16 @@
         <input type="text" id="node-input-hangoutsCertificate">
     </div>
     <div class="form-row">
-        <label for="node-input-roomproperty"><i class="fa fa-group"></i> Room</label>
-        <input type="text" id="node-input-roomproperty">
+        <label for="node-input-roomid"><i class="fa fa-group"></i> Room</label>
+        <select id="node-input-roomid" style="width: 70%"></select>
     </div>
     <div class="form-row">
         <label for="node-input-contentproperty"><i class="fa fa-comment"></i> Content</label>
         <input type="text" id="node-input-contentproperty">
+    </div>
+    <div class="form-row" style="display: none;">
+        <label for="node-input-roomname"><i class="fa fa-group"></i> Room name</label>
+        <input type="text" id="node-input-roomname">
     </div>
 </script>
 
@@ -31,13 +35,14 @@
 
 
 <script type="text/javascript">
+    var selected;
     RED.nodes.registerType('hangoutSensor',{
         category: 'Hangouts Chat',
         color:"#C0DEED",
         defaults: {
-            hangoutsCertificate: {type: "hangoutsCertificate", require:true},
-            roomproperty: { value: "room", validate: RED.validators.typedInput("roomtype"), require:true },
-            roomtype: { value: "msg" },
+            hangoutsCertificate: { type: "hangoutsCertificate", require:true },
+            roomid: { value: ""},
+            roomname: { value: "123"},
             contentproperty: { value: "content", validate: RED.validators.typedInput("contenttype"), require:true },
             contenttype: { value: "msg" }
         },
@@ -48,12 +53,30 @@
         label: 'Hangouts',
         paletteLabel: 'Hangouts',
         oneditprepare: function () {
-            $("#node-input-roomproperty").typedInput({ default: this.roomtype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
             $("#node-input-contentproperty").typedInput({ default: this.contenttype || 'msg', types: ['msg', 'str', 'flow', 'global'] });
+
+            var hangout = $("#node-input-hangoutsCertificate").val() || ""
+            $.getJSON('hangout?id=' + hangout, function (data) {
+                if (data.hasOwnProperty("spaces")) {
+                    data.spaces.forEach(function (element) {
+                        if (element.type == "DM") {
+                            element.displayName = "Direct Message"
+                        }
+                        $("#node-input-roomid").append('<option value=' + element.name + '>' + element.displayName + '</option>');
+                        
+                        if (selected == element.name || selected == undefined) {
+                            selected = element.name
+                            $('#node-input-roomid option[value="' + selected + '"]').prop('selected', true)
+                            $("#node-input-roomname").val(selected)
+                        }
+                    })
+                }
+            })
         },
         oneditsave: function () {
-            this.roomtype = $("#node-input-roomproperty").typedInput('type');
             this.contenttype = $("#node-input-contentproperty").typedInput('type');
+            selected = $("#node-input-roomid option:selected").val();
+            $("#node-input-roomname").val(selected)
         }
     });
 </script>
