@@ -43,7 +43,15 @@ module.exports = function (RED) {
 						body: JSON.stringify({"text": content})
 					};
 					request(opts, function (error, response, body) {
-						var bodyObj = JSON.parse(body);
+						var bodyObj = {}
+						try {
+							bodyObj = JSON.parse(body);
+						} catch (error) {
+							node.error("user not found");
+							node.status({fill:"red",shape:"ring",text:"user not found"});
+							return;
+						}
+
 						if (error) {
 							node.error(error,{});
 							node.status({fill:"red",shape:"ring",text:"failed request chat"});
@@ -53,7 +61,9 @@ module.exports = function (RED) {
 							node.status({fill:"red",shape:"ring",text:bodyObj.error.status});
 							return;
 						} else {
-							msg.payload = content
+							var typeRoom = bodyObj.space.type.toLowerCase()
+							var idRoom = bodyObj.space.name.split("spaces/")[1]
+							msg.payload = "https://chat.google.com/" + typeRoom + "/" + idRoom
 							node.send(msg);
 						}            
 					})
