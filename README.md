@@ -4,17 +4,24 @@ Hangouts-chat-sensor
 ## Usage
 <p>Input Parameters:
     <ul>
-        <li><b>Room</b> - The room in hangouts-chat <b>Key</b> property or the <code>msg.[room]</code> property</li>
-        <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Key</b> property or the <code>msg.[content]</code> property</li>
+        <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Content</b> property or the <code>msg.payload</code> property</li>
     </ul>
 </p>
 <p>Return values:
     <ul>
-        <li><b>payload</b> Will content sent or provide an error state</li>
+        <li><b>payload</b> Will show link to room chat or provide an error state</li>
     </ul>
 </p>
 
-![hangout-node](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-bot/source/image/hangout-node.png)
+<p>Set content "This is a data sensor"</p>
+
+![hangout-node1](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-bot/source/image/hangout-node1.png)
+
+<p>Press node injects to run the node. After success, copy link result to open room chat.</p>
+
+![hangout-node2](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-bot/source/image/hangout-node2.png)
+
+<p>In hangout chat</p>
 
 ![hangout-bot](https://cdn.jsdelivr.net/gh/taminhhienmor/node-red-contrib-hangouts-chat-bot/source/image/hangout-bot.png)
 

@@ -47,8 +47,8 @@ module.exports = function (RED) {
 						try {
 							bodyObj = JSON.parse(body);
 						} catch (error) {
-							node.error("user not found");
-							node.status({fill:"red",shape:"ring",text:"user not found"});
+							node.error("room not found");
+							node.status({fill:"red",shape:"ring",text:"input error"});
 							return;
 						}
 
