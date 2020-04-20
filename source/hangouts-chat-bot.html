@@ -1,4 +1,4 @@
-<script type="text/x-red" data-template-name="hangoutSensor">
+<script type="text/x-red" data-template-name="hangoutChatBot">
     <div class="form-row">
         <label for="node-input-hangoutsCertificate"><i class="fa fa-certificate"></i> Hangouts</label>
         <input type="text" id="node-input-hangoutsCertificate">
@@ -17,8 +17,9 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="hangoutSensor">
-    <p>Hangouts-chat-sensor</p>
+<script type="text/x-red" data-help-name="hangoutChatBot">
+    <p>Hangouts-chat-bot</p>
+    <p>With this node, you can tweet via Bot in Google Chat.</p>
     <p>Input Parameters:
         <ul>
             <li><b>Content</b> - The content message that users want to send in hangouts-chat <b>Content</b> property or the <code>msg.payload</code> property</li>
@@ -34,7 +35,7 @@
 
 <script type="text/javascript">
     var selected;
-    RED.nodes.registerType('hangoutSensor',{
+    RED.nodes.registerType('hangoutChatBot',{
         category: 'Hangouts Chat',
         color:"#C0DEED",
         defaults: {

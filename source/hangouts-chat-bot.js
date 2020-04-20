@@ -3,7 +3,7 @@ const request = require('request');
 module.exports = function (RED) {
 	"use strict";
 
-	function hangoutSensor(n) {
+	function hangoutChatBot(n) {
 		RED.nodes.createNode(this, n);
 		var node = this;
 		
@@ -96,7 +96,7 @@ module.exports = function (RED) {
 		return value
 	}
 
-	RED.nodes.registerType("hangoutSensor", hangoutSensor);
+	RED.nodes.registerType("hangoutChatBot", hangoutChatBot);
 
 	RED.httpAdmin.get('/hangout', function(req, res) {     
 		var hangoutId = res.socket.parser.incoming._parsedUrl.path.split("id=")[1];
