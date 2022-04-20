@@ -40,7 +40,7 @@ module.exports = function (RED) {
 							"Content-Type": "application/json",
 							"Authorization": "Bearer " + tokens.access_token
 						},
-						body: JSON.stringify({"text": content})
+						body: JSON.stringify(content)
 					};
 					request(opts, function (error, response, body) {
 						var bodyObj = {}
